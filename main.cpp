@@ -9,6 +9,11 @@ double daysToHours(double d) {
 	return d*24;
 }
 
+// Перевод часов в минуты
+double hoursToMinutes(double h) {
+	return h * 60;
+}
+
 // ===== Главная функция: меню =====
 int main() {
 	int choice;
@@ -16,6 +21,7 @@ int main() {
 	do {
 		cout << "\n=== Вариант 72: Время: дни ↔ часы, минуты ===\n";
 		cout << "1. Дни ↔ часы\n";
+		cout << "2. Часы ↔ минуты\n";
 		cout << "0. Выход\n";
 		cout << "Выберите пункт: ";
 		cin >> choice;
@@ -24,6 +30,11 @@ int main() {
 			cout << "Введите количество дней: ";
 			cin >> x;
 			cout << "В часах = " << daysToHours(x) << "\n";
+			break;
+		case 2:
+			cout << "Введите количество часов: ";
+			cin >> x;
+			cout << "В минутах = " << hoursToMinutes(x) << "\n";
 			break;
 		case 0:
 			cout << "Работа завершена.\n";
