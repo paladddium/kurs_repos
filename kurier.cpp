@@ -1,32 +1,31 @@
 #include "kurier.hpp"
 #include "zakaz.hpp"
+#include <memory>
 
 #include <iostream>
 using namespace std;
 
-Kurier::Kurier(std::string_view Name2)
+Kurier::Kurier(std::string_view name)
 {
-	Name = string(Name2);
-	zList = new Zakaz*[2];
-	cout << "Courier '" << Name << "' online.\n";
+	m_name = string(name);
+	cout << "Courier '" << m_name << "' online.\n";
 }
 
 Kurier::~Kurier()
 {
-	delete[] zList;
-	cout << "Courier '" << Name << "' offline.\n";
+	cout << "Courier '" << m_name << "' offline.\n";
 }
 
-void Kurier::getZakaz(Zakaz* z)
+void Kurier::getZakaz(shared_ptr<Zakaz> z)
 {
-	if (activeCount < Limit)
+	if (m_activeCount < m_limit)
 	{
-		zList[activeCount] = z;
-		cout << "Courier '" << Name << "' got delivery #" << z->getID() << "\n";
-		activeCount += 1;
+		m_zList[m_activeCount] = z;
+		cout << "Courier '" << m_name << "' got delivery #" << z->getID() << "\n";
+		m_activeCount++;
 	}
 	else
 	{
-		cout << "Courier'" << Name << "''tried to get more delivery than he given!\n";
+		cout << "Courier'" << m_name << "''tried to get more delivery than he given!\n";
 	}
 }
