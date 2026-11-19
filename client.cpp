@@ -1,33 +1,34 @@
 #include "client.hpp"
-#include "zakaz.hpp"
-
 #include <iostream>
+
 using namespace std;
 
-Client::Client(string_view Name2)
+Client::Client(string_view name2)
 {
-	Name = string(Name2);
-	zList = new Zakaz[2];
-	cout << "Client '" << Name << "' online.\n";
+	m_name = string(name2);
+	for (int i = 0; i < m_limit; i++)
+	{
+		m_zList[i] = make_unique<Zakaz>(0);
+	}
+	cout << "Client '" << m_name << "' online.\n";
 }
 
 Client::~Client()
 {
-	delete[] zList;
-	cout << "Client '" << Name << "' offline.\n";
+	cout << "Client '" << m_name << "' offline.\n";
 }
 
-Zakaz* Client::MakeZakaz(int Id)
+Zakaz* Client::MakeZakaz(int id)
 {
-	if (activeCount < Limit)
+	if (m_activeCount < m_limit)
 	{
-		zList[activeCount].FormZakaz(Id);
-		activeCount += 1;
-		return &zList[activeCount - 1];
+		m_zList[m_activeCount]->FormZakaz(id);
+		m_activeCount++;
+		return m_zList[m_activeCount - 1].get();
 	}
 	else
 	{
-		cout << "Client '" << Name << "' tried to get more delivery than he given!\n";
+		cout << "Client '" << m_name << "' tried to get more delivery than he given!\n";
 		return nullptr;
 	}
 }

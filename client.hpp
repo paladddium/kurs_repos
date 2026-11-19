@@ -1,16 +1,16 @@
 #pragma once
 #include <string>
 #include <string_view>
-
-class Zakaz;
+#include <memory>
+#include "Zakaz.hpp"
 
 class Client
 {
 	private:
-		static const char Limit = 2;
-		char activeCount = 0;
-		Zakaz* zList = nullptr;
-		std::string Name;
+		static constexpr int m_limit = 2;
+		int m_activeCount = 0;
+		std::unique_ptr<Zakaz> m_zList[m_limit];
+		std::string m_name;
 
 	public:
 		Client(std::string_view);
