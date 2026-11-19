@@ -1,6 +1,6 @@
 namespace DeliveryApp
 {
-    public class Client
+    public class Client : IDisposable
     {
         private const int _limit = 2;
         private int _activeCount = 0;
@@ -10,6 +10,7 @@ namespace DeliveryApp
         public Client(string Name)
         {
             _name = Name;
+            Console.WriteLine($"Client #{_name} online");
         }
 
         public void MakeZakaz(int Id)
@@ -26,10 +27,9 @@ namespace DeliveryApp
             }
         }
 
-        public override string ToString()
+        public void Dispose()
         {
-            string status = $"Client #{_name}"; //+ (IsActive ? " is alive!" : "is closed");
-            return $"{status}";
+            Console.WriteLine($"Client #{_name} offline");
         }
     }
 }

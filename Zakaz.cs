@@ -1,11 +1,13 @@
 namespace DeliveryApp
 {
-    public class Zakaz
+    public class Zakaz : IDisposable
     {
         public int Id { get; private set; }
+        private bool _isAlive = false;
 
         public Zakaz(int id2 = 0)
         {
+            _isAlive = true;
             Id = id2;
             Console.WriteLine($"Delivery created #{Id}");
         }
@@ -18,8 +20,14 @@ namespace DeliveryApp
 
         public override string ToString()
         {
-            string status = $"Delivery #{Id}"; //+ (IsActive ? " is alive!" : "is closed");
+            string status = $"Delivery #{Id}" + (_isAlive ? " is alive!" : " is closed");
             return $"{status}";
+        }
+
+        public void Dispose()
+        {
+            _isAlive = false;
+            Console.WriteLine($"Delivery #{Id} closed");
         }
     }
 }

@@ -1,20 +1,21 @@
 namespace DeliveryApp
 {
-    public class Kurier
+    public class Kurier : IDisposable
     {
-        private const int _limit = 2;
+        private const int Limit = 2;
         private int _activeCount = 0;
-        private Zakaz[] _zList = new Zakaz[_limit];
+        private Zakaz[] _zList = new Zakaz[Limit];
         private string _name;
 
-        public Kurier(string Name)
+        public Kurier(string name)
         {
-            _name = Name;
+            _name = name;
+            Console.WriteLine($"Kurier {_name} online");
         }
 
         public void GetZakaz(Zakaz z)
         {
-            if (_activeCount < _limit)
+            if (_activeCount < Limit)
             {
                 _zList[_activeCount] = z;
                 Console.WriteLine($"Courier {_name} got delivery #{z.Id}");
@@ -26,25 +27,33 @@ namespace DeliveryApp
             }
         }
 
-        public void CheckZakaz()
+        public override string ToString()
         {
-            for (int i = 0; i < _limit; i++)
+            string status = "";
+
+            for (int i = 0; i < Limit; i++)
             {
-                if((_zList[i] != null) && (_zList[i].Id > 0))
+                if ((_zList[i] != null) && (_zList[i].Id > 0))
                 {
-                    Console.WriteLine($"Zakaz #{_zList[i].Id} is handled");
+                    status += $"Zakaz #{_zList[i].Id} is handled";
                 }
                 else
                 {
-                    Console.WriteLine($"{i}th Zakaz was lost");
+                    status += $"{i}th Zakaz was lost";
+                }
+
+                if(i != (Limit - 1))
+                {
+                    status += "\n";
                 }
             }
+
+            return $"{status}";
         }
 
-        public override string ToString()
+        public void Dispose()
         {
-            string status = $"Kurier #{_name}"; //+ (IsActive ? " is alive!" : "is closed"); "Courier '" << m_name << "' online.\n";
-            return $"{status}";
+            Console.WriteLine($"Kurier {_name} offline");
         }
     }
 }
