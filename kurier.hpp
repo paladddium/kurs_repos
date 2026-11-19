@@ -1,19 +1,20 @@
 #pragma once
 #include <string>
 #include <string_view>
-
-class Zakaz;
+#include <memory>
+#include "Zakaz.hpp"
 
 class Kurier
 {
 	private:
-		static const char Limit = 2;
-		char activeCount = 0;
-		Zakaz** zList = nullptr;
-		std::string Name;
+		static constexpr int m_limit = 2;
+		int m_activeCount = 0;
+		std::weak_ptr<Zakaz> m_zList[m_limit];
+		std::string m_name;
 
 	public:
 		Kurier(std::string_view);
 		~Kurier();
-		void getZakaz(Zakaz*);
+		void getZakaz(std::shared_ptr<Zakaz>);
+		void checkZakaz() const;
 };

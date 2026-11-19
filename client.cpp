@@ -1,33 +1,31 @@
 #include "client.hpp"
-#include "zakaz.hpp"
-
 #include <iostream>
+
 using namespace std;
 
-Client::Client(string_view Name2)
+Client::Client(string_view name2)
 {
-	Name = string(Name2);
-	zList = new Zakaz[2];
-	cout << "Client '" << Name << "' online.\n";
+	m_name = string(name2);
+	cout << "Client '" << m_name << "' online.\n";
 }
 
 Client::~Client()
 {
-	delete[] zList;
-	cout << "Client '" << Name << "' offline.\n";
+	cout << "Client '" << m_name << "' offline.\n";
 }
 
-Zakaz* Client::MakeZakaz(int Id)
+shared_ptr<Zakaz> Client::MakeZakaz(int id)
 {
-	if (activeCount < Limit)
+	if (m_activeCount < m_limit)
 	{
-		zList[activeCount].FormZakaz(Id);
-		activeCount += 1;
-		return &zList[activeCount - 1];
+		m_zList[m_activeCount] = make_shared<Zakaz>(0); //Можно бы было сократить эту строчку в одну, но! Это заготовка для более крупного конструктора заказа
+		m_zList[m_activeCount]->FormZakaz(id);
+		m_activeCount++;
+		return m_zList[m_activeCount - 1];
 	}
 	else
 	{
-		cout << "Client '" << Name << "' tried to get more delivery than he given!\n";
+		cout << "Client '" << m_name << "' tried to get more delivery than he given!\n";
 		return nullptr;
 	}
 }
