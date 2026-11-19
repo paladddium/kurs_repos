@@ -16,4 +16,5 @@ class Kurier
 		Kurier(std::string_view);
 		~Kurier();
 		void getZakaz(std::shared_ptr<Zakaz>);
+		void checkZakaz() const;
 };

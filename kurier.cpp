@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-Kurier::Kurier(std::string_view name)
+Kurier::Kurier(string_view name)
 {
 	m_name = string(name);
 	cout << "Courier '" << m_name << "' online.\n";
@@ -26,6 +26,22 @@ void Kurier::getZakaz(shared_ptr<Zakaz> z)
 	}
 	else
 	{
-		cout << "Courier'" << m_name << "''tried to get more delivery than he given!\n";
+		cout << "Courier'" << m_name << "'tried to get more delivery than he given!\n";
+	}
+}
+
+void Kurier::checkZakaz() const
+{
+	shared_ptr<Zakaz> ptr_temp;
+	for (int i = 0; i < m_limit; i++)
+	{
+		if (ptr_temp = m_zList[i].lock())
+		{
+			cout << "Zakaz #" << ptr_temp->getID() << " is handled\n";
+		}
+		else
+		{
+			cout << i << "th Zakaz was lost\n";
+		}
 	}
 }

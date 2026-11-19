@@ -6,10 +6,6 @@ using namespace std;
 Client::Client(string_view name2)
 {
 	m_name = string(name2);
-	for (int i = 0; i < m_limit; i++)
-	{
-		m_zList[i] = make_shared<Zakaz>(0);
-	}
 	cout << "Client '" << m_name << "' online.\n";
 }
 
@@ -22,6 +18,7 @@ shared_ptr<Zakaz> Client::MakeZakaz(int id)
 {
 	if (m_activeCount < m_limit)
 	{
+		m_zList[m_activeCount] = make_shared<Zakaz>(0); //Можно бы было сократить эту строчку в одну, но! Это заготовка для более крупного конструктора заказа
 		m_zList[m_activeCount]->FormZakaz(id);
 		m_activeCount++;
 		return m_zList[m_activeCount - 1];
