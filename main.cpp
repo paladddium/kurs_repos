@@ -8,11 +8,11 @@ using namespace std;
 
 int main()
 {
+	cout << "Demonstration Software\n";
 	{
 		unique_ptr <Kurier> ptr_kur1 = make_unique<Kurier>("Petr");
 		// Специально сделано так, чтобы клиент и заказы были уничтожены до конца программы
 		{
-			cout << "Demonstration Software\n";
 			unique_ptr<Client> ptr_cl1 = make_unique<Client>("Vlad");
 			shared_ptr<Zakaz> z1 = ptr_cl1->MakeZakaz(4); // В демонстрации подразумевается, что лимит активных заказов клиента равен 2. Первый-второй заказы ГАРАНТИРОВАНО оформляются
 			shared_ptr<Zakaz> z2 = ptr_cl1->MakeZakaz(5);
