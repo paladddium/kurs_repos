@@ -3,29 +3,29 @@
 #include <iostream>
 using namespace std;
 
-Zakaz::Zakaz(int Id2)
+Zakaz::Zakaz(int id)
 {
-	Id = Id2;
-	cout << "Delivery created #" << Id << "\n";
+	m_id = id;
+	cout << "Delivery created #" << m_id << "\n";
 }
 
 Zakaz::~Zakaz()
 {
-	cout << "Delivery #" << Id << " closed\n";
+	cout << "Delivery #" << m_id << " closed\n";
 }
 
-void Zakaz::FormZakaz(int Id2)
+void Zakaz::FormZakaz(int id)
 {
-	Id = Id2;
-	cout << "Delivery described #" << Id << "\n";
+	m_id = id;
+	cout << "Delivery described #" << m_id << "\n";
 }
 
 void Zakaz::aliveStatus()
 {
-	cout << "Delivery #" << Id << " is alive!\n";
+	cout << "Delivery #" << m_id << " is alive!\n";
 }
 
 int Zakaz::getID()
 {
-	return Id;
+	return m_id;
 }
