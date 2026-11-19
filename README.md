@@ -3,8 +3,8 @@
 Студент: Губин Л.А. 
 Группа: ПИ-52
 
-Команда сборки: "dotnet build csharp"
-Команда запуска: "dotnet run --project csharp"
+Команда сборки: "dotnet build"
+Команда запуска: "dotnet run"
 
 Классы: client.cs - класс (клиент) zakaz.cs - класс (заказ) kurier.cs - класс (курьер)
 
