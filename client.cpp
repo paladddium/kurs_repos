@@ -8,7 +8,7 @@ Client::Client(string_view name2)
 	m_name = string(name2);
 	for (int i = 0; i < m_limit; i++)
 	{
-		m_zList[i] = make_unique<Zakaz>(0);
+		m_zList[i] = make_shared<Zakaz>(0);
 	}
 	cout << "Client '" << m_name << "' online.\n";
 }
@@ -18,13 +18,13 @@ Client::~Client()
 	cout << "Client '" << m_name << "' offline.\n";
 }
 
-Zakaz* Client::MakeZakaz(int id)
+shared_ptr<Zakaz> Client::MakeZakaz(int id)
 {
 	if (m_activeCount < m_limit)
 	{
 		m_zList[m_activeCount]->FormZakaz(id);
 		m_activeCount++;
-		return m_zList[m_activeCount - 1].get();
+		return m_zList[m_activeCount - 1];
 	}
 	else
 	{
