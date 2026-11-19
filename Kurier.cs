@@ -7,6 +7,8 @@ namespace DeliveryApp
         private Zakaz[] _zList = new Zakaz[Limit];
         private string _name;
 
+        public string JobGoal { get; set; } = "Коплю на инфинити";
+
         public Kurier(string name)
         {
             _name = name;
