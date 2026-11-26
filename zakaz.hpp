@@ -3,10 +3,10 @@
 class Zakaz
 {
 	private:
-		int Id;
+		int m_id;
 
 	public:
-		Zakaz(int Id2 = 0);
+		Zakaz(int id = 0);
 		~Zakaz();
 		void FormZakaz(int);
 		void aliveStatus();
