@@ -19,7 +19,12 @@ class BaseClient
 		void AddActiveCount();
 		
 	public:
+		BaseClient();
 		BaseClient(std::string_view);
+		BaseClient(const BaseClient&);
+		BaseClient(BaseClient&&) noexcept;
+		BaseClient& operator=(const BaseClient&);
+		BaseClient& operator=(BaseClient&&) noexcept;
 		virtual ~BaseClient();
 		virtual std::shared_ptr<Zakaz> MakeZakaz(int) = 0;
 };
@@ -27,7 +32,13 @@ class BaseClient
 class FClient : public BaseClient
 {
 	public:
+		FClient();
 		FClient(std::string_view);
+		FClient(const FClient&);
+		FClient(FClient&&) noexcept;
+		FClient& operator=(const FClient&);
+		FClient& operator=(FClient&&) noexcept;
+		~FClient() override;
 		std::shared_ptr<Zakaz> MakeZakaz(int) override;
 };
 
