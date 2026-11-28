@@ -3,29 +3,75 @@
 
 using namespace std;
 
-Client::Client(string_view name2)
+BaseClient::BaseClient(std::string_view name)
+	: m_name{name}
 {
-	m_name = string(name2);
 	cout << "Client '" << m_name << "' online.\n";
 }
 
-Client::~Client()
+bool BaseClient::CheckAbility() const
+{
+	return (m_activeCount < MAX_LIMIT);
+}
+
+int BaseClient::GetActiveCount() const
+{
+	return m_activeCount;
+}
+
+std::string_view BaseClient::GetName() const
+{
+	return m_name;
+}
+
+void BaseClient::AddActiveCount()
+{
+	if (CheckAbility())
+	{
+		m_activeCount++;
+	}
+}
+
+BaseClient::~BaseClient()
 {
 	cout << "Client '" << m_name << "' offline.\n";
 }
 
-shared_ptr<Zakaz> Client::MakeZakaz(int id)
+
+FClient::FClient(std::string_view name) : BaseClient{ name } {}
+
+std::shared_ptr<Zakaz> FClient::MakeZakaz(int id)
 {
-	if (m_activeCount < m_limit)
+	if (CheckAbility())
 	{
-		m_zList[m_activeCount] = make_shared<Zakaz>(0); //Можно бы было сократить эту строчку в одну, но! Это заготовка для более крупного конструктора заказа
-		m_zList[m_activeCount]->FormZakaz(id);
-		m_activeCount++;
-		return m_zList[m_activeCount - 1];
+		int x = GetActiveCount();
+		m_zList[x] = make_shared<Zakaz>(0);
+		m_zList[x]->FormZakaz(id);
+		AddActiveCount();
+		return m_zList[x];
 	}
 	else
 	{
-		cout << "Client '" << m_name << "' tried to get more delivery than he given!\n";
+		cout << "Client '" << GetName() << "' tried to get more delivery than he given!\n";
+		return nullptr;
+	}
+}
+
+UClient::UClient(std::string_view name) : BaseClient{ name } {}
+
+std::shared_ptr<Zakaz> UClient::MakeZakaz(int id)
+{
+	if (CheckAbility())
+	{
+		int x = GetActiveCount();
+		m_zList[x] = make_shared<Zakaz>(0);
+		m_zList[x]->FormZakaz(id);
+		AddActiveCount();
+		return m_zList[x];
+	}
+	else
+	{
+		cout << "Client '" << GetName() << "' tried to get more delivery than he given!\n";
 		return nullptr;
 	}
 }
